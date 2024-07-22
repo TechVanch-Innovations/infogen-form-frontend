@@ -1,0 +1,14 @@
+.form__input,
+.form__select,
+.form__textarea {
+    padding: 8px 12px;
+    border-radius: 6px;
+    flex-grow: 1;
+    border: 1px solid rgb(157, 157, 157);
+}
+
+.form__input {
+    &--checkbox {
+        flex-grow: unset;
+    }
+}
