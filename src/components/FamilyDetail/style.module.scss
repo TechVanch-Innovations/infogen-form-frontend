@@ -1,0 +1,65 @@
+.family__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-block: 24px;
+
+  h1 {
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &__container {
+    border: 1px solid rgb(212, 212, 212);
+    border-radius: 12px;
+    margin: 0 48px;
+    padding: 24px;
+    .add__row__button {
+      margin-bottom: 10px;
+    }
+    .table__container {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: auto;
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+        th {
+          background-color: #f2f2f2;
+          border: 1px solid #ddd;
+          padding: 10px;
+          text-align: left;
+          font-size: 14px;
+          &:last-child {
+            min-width: 70px !important;
+            // padding: 0;
+          }
+        }
+        &__cell {
+          border: 1px solid #ddd;
+          input {
+            // border: none;
+            // padding: 10px;
+          }
+          select {
+            border: none;
+            padding: 10px;
+          }
+          .button {
+            padding-left: 10px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: blue;
+          }
+        }
+      }
+    }
+  }
+}
+.input {
+  border: none;
+  padding: 10px;
+}

@@ -1,11 +1,13 @@
-// import MemeberDirectory from "./components/MemberDirectory";
+import FamilyDetail from "./components/FamilyDetail";
+import MemeberDirectory from "./components/MemberDirectory";
 import MembershipDetail from "./components/MembershipDetail";
 
 function App() {
   return (
     <div className="App">
       <MembershipDetail />
-      <MembershipDetail />
+      <MemeberDirectory />
+      <FamilyDetail />
     </div>
   );
 }

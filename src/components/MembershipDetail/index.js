@@ -56,7 +56,7 @@ const MembershipDetail = () => {
                         placeholder={field.placeholder}
                         name={field.name}
                         value={formData[field.name] || ""}
-                        type={field.type || "text"} // Ensure to handle type for checkboxes
+                        type={field.type || "text"}
                         onChange={(e) =>
                           handleChange(field.name, e.target.value)
                         }
