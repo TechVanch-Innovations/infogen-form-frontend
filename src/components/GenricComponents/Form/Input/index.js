@@ -9,6 +9,7 @@ const InputField = ({
   placeholder,
   disabled = false,
   required = true,
+  checked = false,
   value = "",
   onChange = () => {},
 }) => {
@@ -28,6 +29,7 @@ const InputField = ({
       placeholder={placeholder}
       onChange={onChange}
       value={value}
+      checked={type === "checkbox" || type === "radio" ? checked : undefined}
       disabled={disabled}
       required={required}
     />

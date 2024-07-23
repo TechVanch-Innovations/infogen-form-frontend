@@ -1,0 +1,11 @@
+{
+  "type": "found",
+  "memberData": {
+    "membershipNo": 123,
+    "ddNo": 123445,
+    "membershipForm": true,
+    "membershipDate": "2023-03-31",
+    "ddDate": "2023-03-31"
+  },
+  "directory": []
+}

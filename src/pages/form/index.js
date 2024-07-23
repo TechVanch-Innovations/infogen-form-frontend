@@ -1,10 +1,17 @@
 import { useState, useCallback, useEffect } from "react";
-import { GET_DEALER_LIST_API } from "../../utils/constants";
+import {
+  GET_DEALER_LIST_API,
+  GET_MEMBER_DATA_BY_DEALER_CODE,
+  GET_LIST_OF_CONSTANTS,
+} from "../../utils/constants";
 import MembershipDetail from "../../components/MembershipDetail";
 import MemberDirectory from "../../components/MemberDirectory";
 
 const FormPage = () => {
   const [dealerCodeData, setDealerCodeData] = useState([]);
+  const [constitutions, setConstitutions] = useState([]);
+  const [qualifications, setQualifications] = useState([]);
+  const [designations, setDesignations] = useState([]);
   const [formData, setFormData] = useState({
     dealerCode: "",
     membershipNo: "",
@@ -38,6 +45,22 @@ const FormPage = () => {
       setDealerCodeData(data);
     };
     fetchDealerData();
+    const fetchConstantList = async () => {
+      const response = await fetch(GET_LIST_OF_CONSTANTS);
+      const data = await response.json();
+
+      const formatOptions = (items) =>
+        items.map((item) => ({
+          value: item.code,
+          label: item.description,
+        }));
+
+      setConstitutions(formatOptions(data.constitutions || []));
+      setQualifications(formatOptions(data.qualitifcations || []));
+      setDesignations(formatOptions(data.designations || []));
+    };
+
+    fetchConstantList();
   }, []);
 
   useEffect(() => {
@@ -61,6 +84,27 @@ const FormPage = () => {
           ceasationDate: dealerDetails.dlr_cess_dt,
         }));
       }
+      const fetchMemberData = async () => {
+        const response = await fetch(GET_MEMBER_DATA_BY_DEALER_CODE);
+        const result = await response.json();
+        if (result.type === "found") {
+          setFormData((prev) => ({
+            ...prev,
+            membershipNo: result.memberData.membershipNo || "",
+            ddNo: result.memberData.ddNo,
+            membershipForm: result.memberData.membershipForm || "",
+            membershipDate: result.memberData.membershipDate,
+            ddDate: result.memberData.ddDate || "",
+            membershipFee: true,
+          }));
+        } else if (result.type === "created") {
+          setFormData((prev) => ({
+            ...prev,
+            membershipNo: result.membershipNo,
+          }));
+        }
+      };
+      fetchMemberData();
     }
   }, [selectedDealerCode, dealerCodeData]);
 
@@ -74,7 +118,6 @@ const FormPage = () => {
       }));
     }
   }, []);
-  console.log(formData);
   return (
     <>
       <MembershipDetail
@@ -82,7 +125,11 @@ const FormPage = () => {
         handleChange={handleMemebershipDetail}
         dealerCodeData={dealerCodeData}
       />
-      <MemberDirectory />
+      <MemberDirectory
+        constitutions={constitutions}
+        qualifications={qualifications}
+        designations={designations}
+      />
       {/* <FamilyDetail /> */}
     </>
   );

@@ -60,7 +60,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
               <label htmlFor="membershipFee">Membership Fee</label>
               <InputField
                 name="membershipFee"
-                value={formData["membershipFee"] || ""}
+                checked={formData.membershipFee || false}
                 type="checkbox"
                 onChange={(e) =>
                   handleChange("membershipFee", e.target.checked)
@@ -156,7 +156,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
               <label htmlFor="membershipForm">Membership Form</label>
               <InputField
                 name="membershipForm"
-                value={formData["membershipForm"] || ""}
+                checked={formData.membershipForm || false}
                 type="checkbox"
                 onChange={(e) =>
                   handleChange("membershipForm", e.target.checked)
@@ -255,54 +255,12 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
               <label htmlFor="others">Others</label>
               <InputField
                 name="others"
-                value={formData["others"] || ""}
+                checked={formData.others || false}
                 type="checkbox"
                 onChange={(e) => handleChange("others", e.target.checked)}
               />
             </div>
           </div>
-          {/* {fields.map((group, index) => (
-            <div
-              key={index}
-              className={styles["membership__details__form__row"]}
-            >
-              {group.data.map((field, i) => {
-                if (field.component === "InputField") {
-                  return (
-                    <div key={i} className={styles["form__group"]}>
-                      <label htmlFor={field.name}>{field.label}</label>
-                      <InputField
-                        placeholder={field.placeholder}
-                        name={field.name}
-                        value={formData[field.name] || ""}
-                        type={field.type || "text"}
-                        onChange={(e) =>
-                          handleChange(field.name, e.target.value)
-                        }
-                      />
-                    </div>
-                  );
-                } else if (field.component === "SelectField") {
-                  return (
-                    <div key={i} className={styles["form__group"]}>
-                      <label htmlFor={field.name}>{field.label}</label>
-                      <SelectField
-                        placeholder={field.placeholder}
-                        name={field.name}
-                        value={formData[field.name] || ""}
-                        options={field.options}
-                        onChange={(e) =>
-                          handleChange(field.name, e.target.value)
-                        }
-                      />
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </div>
-          ))} */}
         </form>
       </div>
     </div>

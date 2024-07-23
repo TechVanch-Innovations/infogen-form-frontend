@@ -1,0 +1,224 @@
+{
+  "constitutions": [
+    {
+      "code": 1,
+      "short_desc": "R",
+      "description": "PROPRIETOR",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 2,
+      "short_desc": "T",
+      "description": "PARTNERSHIP",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 3,
+      "short_desc": "L",
+      "description": "LIMITED",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 4,
+      "short_desc": "V",
+      "description": "PRIVATE LIMITED",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 5,
+      "short_desc": "P",
+      "description": "LLP",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 6,
+      "short_desc": "H",
+      "description": "HUF",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    }
+  ],
+  "qualitifcations": [
+    {
+      "code": 1,
+      "short_desc": "UM",
+      "description": "UNDER MATRICS",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 2,
+      "short_desc": "MA",
+      "description": "10TH (MATRICS)",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 3,
+      "short_desc": "IN",
+      "description": "12TH (INTERMEDIATE)",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 4,
+      "short_desc": "GR",
+      "description": "GRADUATE",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 5,
+      "short_desc": "PG",
+      "description": "POST GRADUATE",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 6,
+      "short_desc": "DI",
+      "description": "DIPLOMA",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 7,
+      "short_desc": "BT",
+      "description": "B.TECH",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 8,
+      "short_desc": "MB",
+      "description": "MBA",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 9,
+      "short_desc": "MC",
+      "description": "MCA",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 10,
+      "short_desc": "OT",
+      "description": "OTHER",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    }
+  ],
+  "designations": [
+    {
+      "code": 1,
+      "short_desc": "VP",
+      "description": "VIP",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 2,
+      "short_desc": "PT",
+      "description": "PARTNER",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 3,
+      "short_desc": "MP",
+      "description": "MANAGING PARTNER",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 4,
+      "short_desc": "DR",
+      "description": "DIRECTOR",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 5,
+      "short_desc": "MD",
+      "description": "MANAGING DIRECTOR",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 6,
+      "short_desc": "CH",
+      "description": "CHAIRMAN",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 7,
+      "short_desc": "KT",
+      "description": "KARTA",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    },
+    {
+      "code": 8,
+      "short_desc": "OT",
+      "description": "OTHERS",
+      "create_id": null,
+      "create_date": null,
+      "update_id": null,
+      "update_date": null
+    }
+  ]
+}

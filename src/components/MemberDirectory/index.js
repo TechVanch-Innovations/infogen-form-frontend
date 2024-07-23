@@ -20,7 +20,7 @@ const initialFormData = {
   memberStatus: "",
 };
 
-const MemberDirectory = () => {
+const MemberDirectory = ({ constitutions, qualifications, designations }) => {
   const [formData, setFormData] = useState([initialFormData]);
 
   const handleChange = (name, value, index) => {
@@ -73,40 +73,162 @@ const MemberDirectory = () => {
                       </svg>
                     </button>
                   </td>
-                  {headers.map((header, colIndex) => (
-                    <td key={colIndex} className={styles.table__cell}>
-                      {header.type === "select" ? (
-                        <SelectField
-                          label=""
-                          name={header.name}
-                          value={data[header.name]}
-                          onChange={(e) =>
-                            handleChange(header.name, e.target.value, rowIndex)
-                          }
-                          options={header.options}
-                        />
-                      ) : header.type === "text" ||
-                        header.type === "email" ||
-                        header.type === "date" ? (
-                        <InputField
-                          type={header.type}
-                          name={header.name}
-                          placeholder={`Enter ${header.label}`}
-                          value={data[header.name]}
-                          inputClassName={styles["input"]}
-                          onChange={(e) =>
-                            handleChange(header.name, e.target.value, rowIndex)
-                          }
-                        />
-                      ) : header.type === "button" ? (
-                        <button onClick={() => {}} className={styles.button}>
-                          Click on
-                        </button>
-                      ) : (
-                        <></>
-                      )}
-                    </td>
-                  ))}
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Constitution"
+                      name="constitution"
+                      placeholder={"select constitution"}
+                      value={data.constitution || ""}
+                      onChange={(e) =>
+                        handleChange("constitution", e.target.value)
+                      }
+                      options={constitutions}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Desig/Relation"
+                      name="desigRelation"
+                      placeholder={"select designation"}
+                      value={data.desigRelation || ""}
+                      onChange={(e) =>
+                        handleChange("desigRelation", e.target.value)
+                      }
+                      options={designations}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Title"
+                      name="title"
+                      value={data.desigRelation || ""}
+                      onChange={(e) => handleChange("title", e.target.value)}
+                      options={[
+                        { value: "", label: "Select Title" },
+                        { value: "Title1", label: "Title1" },
+                        { value: "Title2", label: "Title2" },
+                      ]}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="text"
+                      name="name"
+                      placeholder="Enter Name"
+                      value={data.name || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Qualification"
+                      name="qualification"
+                      placeholder={"select Qualification"}
+                      value={data.qualification || ""}
+                      onChange={(e) =>
+                        handleChange("qualification", e.target.value)
+                      }
+                      options={qualifications}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="date"
+                      name="dob"
+                      placeholder="Enter DOB"
+                      value={data.dob || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("dob", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="date"
+                      name="dom"
+                      placeholder="Enter DOM"
+                      value={data.dom || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("dom", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Blood Group"
+                      name="bloodGroup"
+                      value={data.bloodGroup || ""}
+                      onChange={(e) =>
+                        handleChange("bloodGroup", e.target.value)
+                      }
+                      options={[
+                        { value: "", label: "Select Blood Group" },
+                        { value: "A+", label: "A+" },
+                        { value: "B+", label: "B+" },
+                        { value: "O+", label: "O+" },
+                        { value: "AB+", label: "AB+" },
+                      ]}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="text"
+                      name="mobileNo"
+                      placeholder="Enter Mobile No."
+                      value={data.mobileNo || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("mobileNo", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="email"
+                      name="emailId"
+                      placeholder="Enter Email ID"
+                      value={data.emailId || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("emailId", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="text"
+                      name="resAdd"
+                      placeholder="Enter Residential Address"
+                      value={data.resAdd || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("resAdd", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <InputField
+                      type="text"
+                      name="resPhone"
+                      placeholder="Enter Residential Phone"
+                      value={data.resPhone || ""}
+                      inputClassName={styles["input"]}
+                      onChange={(e) => handleChange("resPhone", e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <SelectField
+                      label="Member Status"
+                      name="memberStatus"
+                      value={data.memberStatus || ""}
+                      onChange={(e) =>
+                        handleChange("memberStatus", e.target.value)
+                      }
+                      options={[
+                        { value: "", label: "Select Member Status" },
+                        { value: "Active", label: "Active" },
+                        { value: "Inactive", label: "Inactive" },
+                      ]}
+                    />
+                  </td>
+                  <td className={styles.table__cell}>
+                    <button onClick={() => {}} className={styles.button}>
+                      Click on
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
