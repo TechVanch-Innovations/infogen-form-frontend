@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import FamilyDetail from "./components/FamilyDetail";
-import MemberDirectory from "./components/MemberDirectory";
-import MembershipDetail from "./components/MembershipDetail";
 import Loader from "./components/GenricComponents/Loader";
+import FormView from "./components/views";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +20,7 @@ function App() {
           <Loader />
         </div>
       ) : (
-        <>
-          <MembershipDetail />
-          <MemberDirectory />
-          <FamilyDetail />
-        </>
+        <FormView />
       )}
     </div>
   );

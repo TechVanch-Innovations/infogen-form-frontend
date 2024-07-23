@@ -1,46 +1,18 @@
-// import classNames from "classnames";
-import { useState } from "react";
 import styles from "./style.module.scss";
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
-// import { fields } from "../../utils/membershipdetails";
-import { dataDiv } from "../../utils/dealer";
+import { useEffect, useState } from "react";
 
-
-const MembershipDetail = () => {
-  const dealerCodes = dataDiv.map((item) => item.dealer_code);
-  console.log(dealerCodes);
-  const [formData, setFormData] = useState({
-    dealerCode: "",
-    membershipNo: "",
-    membershipStatus: "",
-    membershipFee: false,
-    MembershipFee1: false,
-    ddNo: "",
-    division: "",
-    dealershipName: "",
-    location: "",
-    membershipForm: false,
-    ddDate: "",
-    alternateEmailId: "",
-    gstin: "",
-    dealershipStatus: "",
-    dealerAppointmentDate: "",
-    membershipDate: "",
-    boardMeetingAppointmentDate: "",
-    boardMeetingCeasationDate: false,
-    inoprativeDate: "",
-    ceasationDate: "",
-    boardMeetingReinstateDate: "",
-    others: "",
-  });
-  const handleChange = (name, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
+const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
+  const [dealerCodes, setDealerCodes] = useState([]);
+  useEffect(() => {
+    const transformedDealerCodes = dealerCodeData.map((dealer) => ({
+      value: dealer.dealer_code,
+      label: dealer.dealer_code,
     }));
-  };
-  console.log(formData);
+
+    setDealerCodes(transformedDealerCodes);
+  }, [dealerCodeData]);
   return (
     <div className={styles["membership__details"]}>
       <h1>Membership Detail</h1>
@@ -49,11 +21,11 @@ const MembershipDetail = () => {
           <div className={styles["membership__details__form__row"]}>
             <div className={styles["form__group"]}>
               <label htmlFor="dealerCode">Dealer Code</label>
-              <InputField
+              <SelectField
                 placeholder="Enter dealer code"
                 name="dealerCode"
                 value={formData["dealerCode"] || ""}
-                type="text"
+                options={dealerCodes}
                 onChange={(e) => handleChange("dealerCode", e.target.value)}
               />
             </div>
@@ -80,6 +52,7 @@ const MembershipDetail = () => {
                 onChange={(e) =>
                   handleChange("membershipStatus", e.target.value)
                 }
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -103,6 +76,7 @@ const MembershipDetail = () => {
                 value={formData["division"] || ""}
                 type="text"
                 onChange={(e) => handleChange("division", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -113,6 +87,7 @@ const MembershipDetail = () => {
                 value={formData["dealershipName"] || ""}
                 type="text"
                 onChange={(e) => handleChange("dealershipName", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -122,6 +97,7 @@ const MembershipDetail = () => {
                 name="location"
                 value={formData["location"] || ""}
                 onChange={(e) => handleChange("location", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -146,6 +122,7 @@ const MembershipDetail = () => {
                 onChange={(e) =>
                   handleChange("alternateEmailId", e.target.value)
                 }
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -156,6 +133,7 @@ const MembershipDetail = () => {
                 value={formData["gstin"] || ""}
                 type="text"
                 onChange={(e) => handleChange("gstin", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -170,6 +148,7 @@ const MembershipDetail = () => {
                   { value: "1", label: "Active" },
                   { value: "2", label: "Non Active" },
                 ]}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -197,6 +176,7 @@ const MembershipDetail = () => {
                 onChange={(e) =>
                   handleChange("dealerAppointmentDate", e.target.value)
                 }
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
@@ -243,6 +223,7 @@ const MembershipDetail = () => {
                 value={formData["inoprativeDate"] || ""}
                 type="date"
                 onChange={(e) => handleChange("inoprativeDate", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>
