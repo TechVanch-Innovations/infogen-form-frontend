@@ -37,6 +37,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
                 value={formData["membershipNo"] || ""}
                 type="text"
                 onChange={(e) => handleChange("membershipNo", e.target.value)}
+                disabled={true}
               />
             </div>
             <div className={styles["form__group"]}>

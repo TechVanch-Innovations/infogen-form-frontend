@@ -91,3 +91,11 @@
   border: none;
   padding: 10px;
 }
+@media screen and (max-width: 576px) {
+    .membership__directory {
+        &__container {
+            margin: 0 12px;
+            padding: 20px;
+        }
+    }
+}

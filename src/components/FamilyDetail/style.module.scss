@@ -93,3 +93,12 @@ cursor: pointer;
   border: none;
   padding: 10px;
 }
+
+@media screen and (max-width: 576px) {
+    .family__detail {
+        &__container {
+            margin: 0 12px;
+            padding: 20px;
+        }
+    }
+}

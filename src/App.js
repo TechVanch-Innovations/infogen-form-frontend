@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Loader from "./components/GenricComponents/Loader";
-import FormView from "./components/views";
+import FormPage from "./pages/form";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +20,7 @@ function App() {
           <Loader />
         </div>
       ) : (
-        <FormView />
+        <FormPage />
       )}
     </div>
   );

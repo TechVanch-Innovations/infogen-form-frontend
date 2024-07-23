@@ -1,10 +1,9 @@
-import FamilyDetail from "../FamilyDetail";
 import { useState, useCallback, useEffect } from "react";
-import MemberDirectory from "../MemberDirectory";
-import MembershipDetail from "../MembershipDetail";
 import { GET_DEALER_LIST_API } from "../../utils/constants";
+import MembershipDetail from "../../components/MembershipDetail";
+import MemberDirectory from "../../components/MemberDirectory";
 
-const FormView = () => {
+const FormPage = () => {
   const [dealerCodeData, setDealerCodeData] = useState([]);
   const [formData, setFormData] = useState({
     dealerCode: "",
@@ -84,9 +83,9 @@ const FormView = () => {
         dealerCodeData={dealerCodeData}
       />
       <MemberDirectory />
-      <FamilyDetail />
+      {/* <FamilyDetail /> */}
     </>
   );
 };
 
-export default FormView;
+export default FormPage;
