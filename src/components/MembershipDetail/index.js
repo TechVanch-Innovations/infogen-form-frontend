@@ -1,8 +1,8 @@
 // import classNames from "classnames";
 import { useState } from "react";
 import styles from "./style.module.scss";
-import InputField from "../Form/Input";
-import SelectField from "../Form/Select";
+import InputField from "../GenricComponents/Form/Input";
+import SelectField from "../GenricComponents/Form/Select";
 import { fields } from "../../utils/membershipdetails";
 
 const MembershipDetail = () => {
