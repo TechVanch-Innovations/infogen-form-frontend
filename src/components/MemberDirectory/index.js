@@ -1,43 +1,17 @@
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
 import styles from "./style.module.scss";
-import { useState } from "react";
 import { headers } from "../../utils/directoryData";
 
-const initialFormData = {
-  constitution: "",
-  desigRelation: "",
-  title: "",
-  name: "",
-  qualification: "",
-  dob: "",
-  dom: "",
-  bloodGroup: "",
-  mobileNo: "",
-  emailId: "",
-  resAdd: "",
-  resPhone: "",
-  memberStatus: "",
-};
-
-const MemberDirectory = ({ constitutions, qualifications, designations }) => {
-  const [formData, setFormData] = useState([initialFormData]);
-
-  const handleChange = (name, value, index) => {
-    const newData = [...formData];
-    newData[index] = { ...newData[index], [name]: value };
-    setFormData(newData);
-  };
-
-  const handleAddRow = () => {
-    setFormData([...formData, { ...initialFormData }]);
-  };
-
-  const handleDeleteRow = (index) => {
-    const newData = formData.filter((_, rowIndex) => rowIndex !== index);
-    setFormData(newData);
-  };
-
+const MemberDirectory = ({
+  constitutions,
+  qualifications,
+  designations,
+  formData,
+  handleAddRow,
+  handleDeleteRow,
+  handleChange,
+}) => {
   return (
     <div className={styles["membership__directory"]}>
       <h3>Membership Directory</h3>
@@ -80,7 +54,7 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder={"select constitution"}
                       value={data.constitution || ""}
                       onChange={(e) =>
-                        handleChange("constitution", e.target.value)
+                        handleChange("constitution", e.target.value, rowIndex)
                       }
                       options={constitutions}
                     />
@@ -92,7 +66,7 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder={"select designation"}
                       value={data.desigRelation || ""}
                       onChange={(e) =>
-                        handleChange("desigRelation", e.target.value)
+                        handleChange("desigRelation", e.target.value, rowIndex)
                       }
                       options={designations}
                     />
@@ -102,7 +76,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       label="Title"
                       name="title"
                       value={data.desigRelation || ""}
-                      onChange={(e) => handleChange("title", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("title", e.target.value, rowIndex)
+                      }
                       options={[
                         { value: "", label: "Select Title" },
                         { value: "Title1", label: "Title1" },
@@ -117,7 +93,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter Name"
                       value={data.name || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("name", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("name", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -127,7 +105,7 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder={"select Qualification"}
                       value={data.qualification || ""}
                       onChange={(e) =>
-                        handleChange("qualification", e.target.value)
+                        handleChange("qualification", e.target.value, rowIndex)
                       }
                       options={qualifications}
                     />
@@ -139,7 +117,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter DOB"
                       value={data.dob || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("dob", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("dob", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -149,7 +129,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter DOM"
                       value={data.dom || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("dom", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("dom", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -158,7 +140,7 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       name="bloodGroup"
                       value={data.bloodGroup || ""}
                       onChange={(e) =>
-                        handleChange("bloodGroup", e.target.value)
+                        handleChange("bloodGroup", e.target.value, rowIndex)
                       }
                       options={[
                         { value: "", label: "Select Blood Group" },
@@ -176,7 +158,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter Mobile No."
                       value={data.mobileNo || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("mobileNo", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("mobileNo", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -186,7 +170,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter Email ID"
                       value={data.emailId || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("emailId", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("emailId", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -196,7 +182,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter Residential Address"
                       value={data.resAdd || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("resAdd", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("resAdd", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -206,7 +194,9 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       placeholder="Enter Residential Phone"
                       value={data.resPhone || ""}
                       inputClassName={styles["input"]}
-                      onChange={(e) => handleChange("resPhone", e.target.value)}
+                      onChange={(e) =>
+                        handleChange("resPhone", e.target.value, rowIndex)
+                      }
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -215,7 +205,7 @@ const MemberDirectory = ({ constitutions, qualifications, designations }) => {
                       name="memberStatus"
                       value={data.memberStatus || ""}
                       onChange={(e) =>
-                        handleChange("memberStatus", e.target.value)
+                        handleChange("memberStatus", e.target.value, rowIndex)
                       }
                       options={[
                         { value: "", label: "Select Member Status" },
