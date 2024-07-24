@@ -264,6 +264,7 @@ const FormPage = () => {
         return;
       };
 
+      // form validations
       if (formData.dealerAppointmentDate && formData.membershipDate) {
         const dt1 = DateTime.fromISO(formData.membershipDate, { zone: "Asia/Kolkata" });
         const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, { zone: "Asia/Kolkata" });
@@ -271,6 +272,15 @@ const FormPage = () => {
           throw new Error("Membership date should be greater than Dealer Appointment Date");
         }
       }
+
+      if (formData.dealerAppointmentDate && formData.ddDate) {
+        const dt1 = DateTime.fromISO(formData.ddDate, { zone: "Asia/Kolkata" });
+        const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, { zone: "Asia/Kolkata" });
+        if (!(dt1 > dt2)) {
+          throw new Error("DD date should be greater than Dealer Appointment Date");
+        }
+      }
+      // end of form validations
 
       const memberDetailForm = document.getElementById("member-directory-form");
       const memberDetailFormValidity = memberDetailForm.checkValidity();
