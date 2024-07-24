@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
 import styles from "./style.module.scss";
 import { familyData } from "../../utils/familyData";
 
-const validateFormData = (data) => {
-  const requiredFields = ["desigRelation", "title", "name", "qualification"];
+import FormLayout from "../FormLayout";
+import Title from "../Title";
+import Button from "../Button";
+import Divider from "../Divider";
 
-  return data.every((row) =>
-    requiredFields.every((field) => row[field] && row[field].trim() !== "")
-  );
-};
+import { validateFamilyData } from "../../utils/fn";
+import toast from "react-hot-toast";
 
 const FamilyDetail = ({
   rowIndex,
@@ -21,63 +23,104 @@ const FamilyDetail = ({
   qualifications,
   designations,
   handleSave,
+  handleCloseOperation = () => {}
 }) => {
-  const isFormValid = validateFormData(formData);
+  const [saved, setSaved] = useState(false);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (saved) {
+      let timer = setTimeout(() => {
+        setSaved(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+        setSaved(false);
+      }
+    }
+  }, [saved]);
+
+  const handleSaveOperation = (e) => {
+    if (validateFamilyData(formData)) {
+      setError(false);
+      handleSave(rowIndex);
+      setSaved(true);
+    } else {
+      setError(true);
+    }
+  };
+
+  const triggerAddRow = e => {
+    e.stopPropagation();
+    e.preventDefault();
+    const hasValidData = validateFamilyData(formData);
+    if (!hasValidData) {
+      toast.error("Please fill all the details in family row(s) then add a new row");
+      return;
+    };
+    if (handleAddRow) {
+      handleAddRow();
+    }
+  };
+
   return (
-    <div className={styles["family__detail"]}>
-      <h3>Family Details</h3>
-      <div className={styles["family__detail__container"]}>
-        <button onClick={handleAddRow} className={styles["add__row__button"]}>
-          Add Row
-        </button>
-        <button
-          onClick={() => {
-            if (isFormValid) {
-              setError(false);
-              handleSave(rowIndex);
-            } else {
-              setError(true);
-              // alert("Please fill in all required fields.");
-            }
-          }}
-          type="submit"
-          className={`${styles["add__save_button"]}`}
-        >
-          Save
-        </button>
+    <FormLayout id="family-form">
+      <Title medium rightSection={
+        <div className={styles["table__actions"]}>
+          <Button type="button" className={styles["table__actions__save"]} onClick={handleSaveOperation}>Save</Button>
+          <Button type="button" onClick={triggerAddRow}>Add Row</Button>
+          <Button type="button" className={styles["table__actions__close"]} onClick={handleCloseOperation}>Close</Button>
+        </div>
+      }>
+        <span>Family Details</span>
         {error && (
-          <span className={styles.error}>
-            Please fill all the required fields
+          <span className={styles["error"]}>
+            (Please fill all the required fields)
           </span>
         )}
+        {saved && (
+          <span className={styles["saved"]}>
+            Data Saved for directory
+          </span>
+        )}
+      </Title>
+      <Divider />
+      <div className={styles["family__detail__container"]}>
         <div className={styles["table__container"]}>
           <table className={styles.table}>
             <thead>
               <tr>
                 <th>Actions</th>
                 {familyData.map((header, index) => (
-                  <th key={index}>{header.label}</th>
+                  <th data-required={header?.required || false} key={index}>{header.label}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {formData.map((data, rowIndex) => (
                 <tr key={rowIndex}>
-                  <td className={styles.table__cell}>
-                    <button
-                      onClick={() => handleDeleteRow(rowIndex)}
-                      className={styles["delete__row__button"]}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                        width="16"
-                        height="16"
+                  <td className={classNames({
+                    [styles.table__cell]: true,
+                    [styles.table__cell__centered]: true
+                  })}>
+                    {
+                      formData?.length > 1 ?
+                      <button
+                        onClick={() => handleDeleteRow(rowIndex)}
+                        className={styles["delete__row__button"]}
                       >
-                        <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
-                      </svg>
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                          width="16"
+                          height="16"
+                        >
+                          <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z" />
+                        </svg>
+                      </button>
+                      : " - "
+                    }
                   </td>
                   <td className={styles.table__cell}>
                     <SelectField
@@ -101,9 +144,10 @@ const FamilyDetail = ({
                         handleChange("title", e.target.value, rowIndex)
                       }
                       options={[
-                        { value: "", label: "Select Title" },
-                        { value: "Title1", label: "Title1" },
-                        { value: "Title2", label: "Title2" },
+                        { value: "", label: "select Title" },
+                        { value: "mr", label: "Mr." },
+                        { value: "mrs", label: "Mrs." },
+                        { value: "ms", label: "Ms." },
                       ]}
                     />
                   </td>
@@ -142,7 +186,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("dob", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -155,7 +199,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("dom", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -173,7 +217,7 @@ const FamilyDetail = ({
                         { value: "O+", label: "O+" },
                         { value: "AB+", label: "AB+" },
                       ]}
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -186,7 +230,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("mobileNo", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -199,7 +243,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("emailId", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -212,7 +256,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("resAdd", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -225,7 +269,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("resPhone", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -242,10 +286,10 @@ const FamilyDetail = ({
                       }
                       options={[
                         { value: "", label: "Select involvement in business" },
-                        { value: "Active", label: "Active" },
-                        { value: "Inactive", label: "Inactive" },
+                        { value: "H", label: "Active" },
+                        { value: "L", label: "Inactive" },
                       ]}
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -258,7 +302,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("since", e.target.value, rowIndex)
                       }
-                      required={true}
+                      required={false}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -271,10 +315,10 @@ const FamilyDetail = ({
                       }
                       options={[
                         { value: "", label: "Select Member Status" },
-                        { value: "Active", label: "Active" },
-                        { value: "Inactive", label: "Inactive" },
+                        { value: "Y", label: "Active" },
+                        { value: "N", label: "Inactive" },
                       ]}
-                      required={true}
+                      required={false}
                     />
                   </td>
                 </tr>
@@ -283,7 +327,7 @@ const FamilyDetail = ({
           </table>
         </div>
       </div>
-    </div>
+    </FormLayout>
   );
 };
 

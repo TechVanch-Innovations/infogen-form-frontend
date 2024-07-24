@@ -1,0 +1,16 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1em;
+    padding-inline: 24px;
+    padding-block: 16px 0;
+
+    &--large {
+        font-size: 1.5em;
+    }
+
+    &--medium {
+        font-size: 1.25em;
+    }
+}

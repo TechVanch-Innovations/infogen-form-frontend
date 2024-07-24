@@ -12,3 +12,9 @@
         flex-grow: unset;
     }
 }
+
+input, select {
+    &:disabled {
+        background-color: rgb(234, 234, 234);
+    }
+}

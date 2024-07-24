@@ -2,6 +2,10 @@ import styles from "./style.module.scss";
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
 import { useEffect, useState } from "react";
+import FormLayout from "../FormLayout";
+import Title from "../Title";
+import Divider from "../Divider";
+import classNames from "classnames";
 
 const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
   const [dealerCodes, setDealerCodes] = useState([]);
@@ -14,14 +18,16 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
     setDealerCodes(transformedDealerCodes);
   }, [dealerCodeData]);
   return (
-    <div className={styles["membership__details"]}>
-      <h1>Membership Detail</h1>
+    <FormLayout id="membership-form">
+      <Title large>Membership Detail</Title>
+      <Divider />
       <div className={styles["membership__details__container"]}>
-        <form className={styles["membership__details__form"]}>
+        <div className={styles["membership__details__form"]}>
           <div className={styles["membership__details__form__row"]}>
             <div className={styles["form__group"]}>
               <label htmlFor="dealerCode">Dealer Code</label>
               <SelectField
+                required
                 placeholder="Enter dealer code"
                 name="dealerCode"
                 value={formData["dealerCode"] || ""}
@@ -32,6 +38,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="membershipNo">Membership No.</label>
               <InputField
+                required
                 placeholder="Enter membership no."
                 name="membershipNo"
                 value={formData["membershipNo"] || ""}
@@ -43,12 +50,14 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="membershipStatus">Membership Status</label>
               <SelectField
-                placeholder={"Enter Memebrship"}
+                required={false}
+                placeholder={"Pending"}
                 name="membershipStatus"
-                value={formData["membershipStatus"] || ""}
+                value={formData["membershipStatus"] || "N"}
                 options={[
-                  { value: "1", label: "Credit" },
-                  { value: "2", label: "Debit" },
+                  { value: "P", label: "Pending" },
+                  { value: "C", label: "Active" },
+                  { value: "O", label: "Cancelled" },
                 ]}
                 onChange={(e) =>
                   handleChange("membershipStatus", e.target.value)
@@ -59,8 +68,9 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="membershipFee">Membership Fee</label>
               <InputField
+                required={false}
                 name="membershipFee"
-                checked={formData.membershipFee || false}
+                checked={!!formData.membershipFee}
                 type="checkbox"
                 onChange={(e) =>
                   handleChange("membershipFee", e.target.checked)
@@ -72,6 +82,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="division">Division</label>
               <InputField
+                required={false}
                 placeholder="Enter division"
                 name="division"
                 value={formData["division"] || ""}
@@ -83,6 +94,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="dealershipName">Dealership Name</label>
               <InputField
+                required={false}
                 placeholder="Enter dealership name"
                 name="dealershipName"
                 value={formData["dealershipName"] || ""}
@@ -94,6 +106,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="location">Location</label>
               <InputField
+                required={false}
                 placeholder="Enter location"
                 name="location"
                 value={formData["location"] || ""}
@@ -116,6 +129,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="alternateEmailId">Alternate Email ID</label>
               <InputField
+                required={false}
                 placeholder="Enter alternate email ID"
                 name="alternateEmailId"
                 value={formData["alternateEmailId"] || ""}
@@ -129,6 +143,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="gstin">GSTIN</label>
               <InputField
+                required={false}
                 placeholder="Enter GSTIN"
                 name="gstin"
                 value={formData["gstin"] || ""}
@@ -140,6 +155,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="dealershipStatus">Dealership Status</label>
               <SelectField
+                required={false}
                 name="dealershipStatus"
                 value={formData["dealershipStatus"] || ""}
                 onChange={(e) =>
@@ -156,11 +172,12 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
               <label htmlFor="membershipForm">Membership Form</label>
               <InputField
                 name="membershipForm"
-                checked={formData.membershipForm || false}
+                checked={!!formData.membershipForm}
                 type="checkbox"
                 onChange={(e) =>
                   handleChange("membershipForm", e.target.checked)
                 }
+                required={false}
               />
             </div>
           </div>
@@ -170,6 +187,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
                 Dealer Appointment Date
               </label>
               <InputField
+                required={false}
                 placeholder="Enter dealer appointment date"
                 name="dealerAppointmentDate"
                 value={formData["dealerAppointmentDate"] || ""}
@@ -190,7 +208,10 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
                 onChange={(e) => handleChange("membershipDate", e.target.value)}
               />
             </div>
-            <div className={styles["form__group"]}>
+            <div className={classNames({
+              [styles["form__group"]]: true,
+              [styles["form__group__grow"]]: true
+            })}>
               <label htmlFor="boardMeetingCeasationDate">
                 Board Meeting (Members Ceasation) Date
               </label>
@@ -219,6 +240,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="inoprativeDate">Inoperative Date</label>
               <InputField
+                required={false}
                 placeholder="Enter inoperative date"
                 name="inoprativeDate"
                 value={formData["inoprativeDate"] || ""}
@@ -230,6 +252,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="ceasationDate">Ceasation Date</label>
               <InputField
+                required={false}
                 placeholder="Enter ceasation date"
                 name="ceasationDate"
                 value={formData["ceasationDate"] || ""}
@@ -237,7 +260,10 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
                 onChange={(e) => handleChange("ceasationDate", e.target.value)}
               />
             </div>
-            <div className={styles["form__group"]}>
+            <div className={classNames({
+              [styles["form__group"]]: true,
+              [styles["form__group__grow"]]: true
+            })}>
               <label htmlFor="boardMeetingReinstateDate">
                 Board Meeting (Members Reinstate) Date
               </label>
@@ -254,16 +280,17 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
             <div className={styles["form__group"]}>
               <label htmlFor="others">Others</label>
               <InputField
+                required={false}
                 name="others"
-                checked={formData.others || false}
+                checked={!!formData.others}
                 type="checkbox"
                 onChange={(e) => handleChange("others", e.target.checked)}
               />
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </FormLayout>
   );
 };
 

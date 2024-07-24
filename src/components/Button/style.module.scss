@@ -1,0 +1,17 @@
+.btn {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    color: white;
+    background: #146194;
+    cursor: pointer;
+    transition: all 200ms ease;
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    &:active {
+        filter: invert(0.5);
+    }
+}

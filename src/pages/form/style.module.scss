@@ -1,10 +1,24 @@
-.submit__button{
-    margin-left: 48px;
-    padding: 12px 20px;
+.form__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 120px;
+}
+
+.form__submit {
+    position: fixed;
+    background-color: white;
+    border-top: 1px solid rgb(221, 221, 221);
+    bottom: 0;
+    padding: 12px 48px;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.submit__button {
+    padding: 12px 36px;
+    font-size: 14px;
+    margin-right: 80px;
     border: none;
-    background-color: #00c6ff;
     cursor: pointer;
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 40px;
 }

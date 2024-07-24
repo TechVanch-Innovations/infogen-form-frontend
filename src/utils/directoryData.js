@@ -1,33 +1,56 @@
 export const headers = [
-  { label: "Actions" },
   {
-    label: "Constitution",
+    "label": "Actions"
   },
   {
-    label: "Desig/Relation",
+    "label": "Constitution",
+    required: true
   },
   {
-    label: "Title",
-  },
-  { label: "Name" },
-  {
-    label: "Qualification",
+    "label": "Desig/Relation",
+    required: true
   },
   {
-    label: "DOB",
+    "label": "Title",
+    required: true
   },
   {
-    label: "DOM",
+    "label": "Name",
+    required: true
   },
   {
-    label: "Blood Group",
+    "label": "Qualification",
+    required: true
   },
-  { label: "Mobile No." },
-  { label: "Email id" },
-  { label: "Res. Add." },
-  { label: "Res. Phone" },
   {
-    label: "Member Status",
+    "label": "DOB",
+    required: true
   },
-  { label: "Click on" },
+  {
+    "label": "DOM",
+    required: true
+  },
+  {
+    "label": "Blood Group"
+  },
+  {
+    "label": "Mobile No.",
+    required: true
+  },
+  {
+    "label": "Email id",
+    required: true
+  },
+  {
+    "label": "Res. Add."
+  },
+  {
+    "label": "Res. Phone"
+  },
+  {
+    "label": "Member Status"
+  },
+  {
+    "label": "Click on"
+  }
 ];
