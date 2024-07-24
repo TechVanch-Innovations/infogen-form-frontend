@@ -8,22 +8,7 @@ import MembershipDetail from "../../components/MembershipDetail";
 import MemberDirectory from "../../components/MemberDirectory";
 import Loader from "../../components/GenricComponents/Loader";
 import FamilyDetail from "../../components/FamilyDetail";
-
-const directoryInitialFormData = {
-  constitution: "",
-  desigRelation: "",
-  title: "",
-  name: "",
-  qualification: "",
-  dob: "",
-  dom: "",
-  bloodGroup: "",
-  mobileNo: "",
-  emailId: "",
-  resAdd: "",
-  resPhone: "",
-  memberStatus: "",
-};
+import styles from "./style.module.scss";
 const familyInitialFormData = {
   desigRelation: "",
   title: "",
@@ -39,6 +24,26 @@ const familyInitialFormData = {
   involmentInBusiness: "",
   since: "",
   status: "",
+};
+
+const directoryInitialFormData = {
+  id: 1,
+  data: {
+    constitution: "",
+    desigRelation: "",
+    title: "",
+    name: "",
+    qualification: "",
+    dob: "",
+    dom: "",
+    bloodGroup: "",
+    mobileNo: "",
+    emailId: "",
+    resAdd: "",
+    resPhone: "",
+    memberStatus: "",
+  },
+  familyDetails: [familyInitialFormData],
 };
 const FormPage = () => {
   const [dealerCodeData, setDealerCodeData] = useState([]);
@@ -72,14 +77,21 @@ const FormPage = () => {
   });
   const [selectedDealerCode, setSelectedDealerCode] = useState("");
 
-  const [familyFormData, setFamilyFormData] = useState([familyInitialFormData]);
+  const [familyFormData, setFamilyFormData] = useState(
+    directoryInitialFormData.familyDetails
+  );
   const [showFamilyDetailForRow, setShowFamilyDetailForRow] = useState(null);
   const [memberDirectoryData, setMemberDirectoryData] = useState([
-    directoryInitialFormData,
+    { ...directoryInitialFormData, id: 1 },
   ]);
-  const handleShowFamilyDetail = useCallback((index) => {
-    setShowFamilyDetailForRow(index);
-  }, []);
+  const handleShowFamilyDetail = (id) => {
+    setShowFamilyDetailForRow(id);
+    const directoryEntry = memberDirectoryData.find((entry) => entry.id === id);
+
+    if (directoryEntry) {
+      setFamilyFormData(directoryEntry.familyDetails);
+    }
+  };
   const handleDirectoryChanges = useCallback((name, value, index) => {
     setMemberDirectoryData((prevData) => {
       const newData = [...prevData];
@@ -100,7 +112,7 @@ const FormPage = () => {
       if (type === "directory") {
         setMemberDirectoryData((prevData) => [
           ...prevData,
-          { ...directoryInitialFormData },
+          { ...directoryInitialFormData, id: prevData.length + 1 },
         ]);
       } else if (type === "family") {
         setFamilyFormData((prevData) => [
@@ -220,6 +232,13 @@ const FormPage = () => {
       }));
     }
   }, []);
+  const handleSave = (id) => {
+    const entryToSave = memberDirectoryData.find((entry) => entry.id === id);
+    entryToSave.familyDetails = familyFormData;
+  };
+  const handleSubmit = () => {
+    console.log("form submitted");
+  };
   return (
     <>
       {loading ? (
@@ -252,8 +271,12 @@ const FormPage = () => {
               designations={designations}
               handleAddRow={() => handleAddRow("family")}
               handleDeleteRow={(index) => handleDeleteRow("family", index)}
+              handleSave={handleSave}
             />
           )}
+          <button className={styles.submit__button} onClick={handleSubmit}>
+            Submit
+          </button>
         </>
       )}
     </>

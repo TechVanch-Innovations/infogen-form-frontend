@@ -25,6 +25,16 @@
       background: #00c6ff;
 cursor: pointer;
     }
+   .add__save_button{
+     margin-bottom: 10px;
+     margin-left: 10px;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      color:  white;
+      background: #00c6ff;
+cursor: pointer;
+   }
     .table__container {
       height: 100%;
       overflow-y: auto;
@@ -101,4 +111,10 @@ cursor: pointer;
             padding: 20px;
         }
     }
+}
+
+.error{
+  color: red;
+  font-size: 12px;
+  margin-left: 40px;
 }

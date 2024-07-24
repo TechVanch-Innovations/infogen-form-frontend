@@ -1,7 +1,16 @@
+import React, { useState } from "react";
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
 import styles from "./style.module.scss";
 import { familyData } from "../../utils/familyData";
+
+const validateFormData = (data) => {
+  const requiredFields = ["desigRelation", "title", "name", "qualification"];
+
+  return data.every((row) =>
+    requiredFields.every((field) => row[field] && row[field].trim() !== "")
+  );
+};
 
 const FamilyDetail = ({
   rowIndex,
@@ -11,9 +20,10 @@ const FamilyDetail = ({
   handleChange,
   qualifications,
   designations,
+  handleSave,
 }) => {
-  console.log(rowIndex);
-
+  const isFormValid = validateFormData(formData);
+  const [error, setError] = useState(false);
   return (
     <div className={styles["family__detail"]}>
       <h3>Family Details</h3>
@@ -21,6 +31,26 @@ const FamilyDetail = ({
         <button onClick={handleAddRow} className={styles["add__row__button"]}>
           Add Row
         </button>
+        <button
+          onClick={() => {
+            if (isFormValid) {
+              setError(false);
+              handleSave(rowIndex);
+            } else {
+              setError(true);
+              // alert("Please fill in all required fields.");
+            }
+          }}
+          type="submit"
+          className={`${styles["add__save_button"]}`}
+        >
+          Save
+        </button>
+        {error && (
+          <span className={styles.error}>
+            Please fill all the required fields
+          </span>
+        )}
         <div className={styles["table__container"]}>
           <table className={styles.table}>
             <thead>
@@ -59,13 +89,14 @@ const FamilyDetail = ({
                         handleChange("desigRelation", e.target.value, rowIndex)
                       }
                       options={designations}
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
                     <SelectField
                       label="Title"
                       name="title"
-                      value={data.desigRelation || ""}
+                      value={data.title || ""}
                       onChange={(e) =>
                         handleChange("title", e.target.value, rowIndex)
                       }
@@ -86,6 +117,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("name", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -110,6 +142,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("dob", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -122,6 +155,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("dom", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -139,6 +173,7 @@ const FamilyDetail = ({
                         { value: "O+", label: "O+" },
                         { value: "AB+", label: "AB+" },
                       ]}
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -151,6 +186,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("mobileNo", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -163,6 +199,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("emailId", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -175,6 +212,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("resAdd", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -187,11 +225,12 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("resPhone", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
                     <SelectField
-                      label="Involment in Business"
+                      label="Involvement in Business"
                       name="involmentInBusiness"
                       value={data.involmentInBusiness || ""}
                       onChange={(e) =>
@@ -206,6 +245,7 @@ const FamilyDetail = ({
                         { value: "Active", label: "Active" },
                         { value: "Inactive", label: "Inactive" },
                       ]}
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -218,6 +258,7 @@ const FamilyDetail = ({
                       onChange={(e) =>
                         handleChange("since", e.target.value, rowIndex)
                       }
+                      required={true}
                     />
                   </td>
                   <td className={styles.table__cell}>
@@ -233,6 +274,7 @@ const FamilyDetail = ({
                         { value: "Active", label: "Active" },
                         { value: "Inactive", label: "Inactive" },
                       ]}
+                      required={true}
                     />
                   </td>
                 </tr>
@@ -244,4 +286,5 @@ const FamilyDetail = ({
     </div>
   );
 };
+
 export default FamilyDetail;

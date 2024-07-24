@@ -217,7 +217,7 @@ const MemberDirectory = ({
                   <td className={styles.table__cell}>
                     <button
                       onClick={() => {
-                        handleShowFamilyDetail(rowIndex);
+                        handleShowFamilyDetail(data.id);
                       }}
                       className={styles.button}
                     >

@@ -1,11 +1,11 @@
 export const familyData = [
   {
-    label: "Desig/Relation",
+    label: "Desig/Relation *",
   },
   {
-    label: "Title",
+    label: "Title *",
   },
-  { label: "Name" },
+  { label: "Name *" },
   {
     label: "Qualification",
     name: "qualification",
