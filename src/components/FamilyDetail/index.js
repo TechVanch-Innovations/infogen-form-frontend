@@ -21,7 +21,8 @@ const initialFormData = {
   status: "",
 };
 
-const FamilyDetail = () => {
+const FamilyDetail = ({ rowIndex }) => {
+  console.log(rowIndex);
   const [formData, setFormData] = useState([initialFormData]);
   const handleChange = (name, value, index) => {
     const newData = [...formData];

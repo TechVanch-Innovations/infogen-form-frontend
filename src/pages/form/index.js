@@ -7,6 +7,7 @@ import {
 import MembershipDetail from "../../components/MembershipDetail";
 import MemberDirectory from "../../components/MemberDirectory";
 import Loader from "../../components/GenricComponents/Loader";
+import FamilyDetail from "../../components/FamilyDetail";
 
 const FormPage = () => {
   const [dealerCodeData, setDealerCodeData] = useState([]);
@@ -55,9 +56,13 @@ const FormPage = () => {
     resPhone: "",
     memberStatus: "",
   };
+  const [showFamilyDetailForRow, setShowFamilyDetailForRow] = useState(null);
   const [memberDirectoryData, setMemberDirectoryData] = useState([
     directoryInitialFormData,
   ]);
+  const handleShowFamilyDetail = (index) => {
+    setShowFamilyDetailForRow(index);
+  };
   const handleDirectoryChanges = (name, value, index) => {
     const newData = [...memberDirectoryData];
     newData[index] = { ...newData[index], [name]: value };
@@ -191,8 +196,11 @@ const FormPage = () => {
             constitutions={constitutions}
             qualifications={qualifications}
             designations={designations}
+            handleShowFamilyDetail={handleShowFamilyDetail}
           />
-          {/* <FamilyDetail /> */}
+          {showFamilyDetailForRow !== null && (
+            <FamilyDetail rowIndex={showFamilyDetailForRow} />
+          )}
         </>
       )}
     </>

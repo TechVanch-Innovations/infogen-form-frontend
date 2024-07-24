@@ -11,6 +11,7 @@ const MemberDirectory = ({
   handleAddRow,
   handleDeleteRow,
   handleChange,
+  handleShowFamilyDetail,
 }) => {
   return (
     <div className={styles["membership__directory"]}>
@@ -23,7 +24,6 @@ const MemberDirectory = ({
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Actions</th>
                 {headers.map((header, index) => (
                   <th key={index}>{header.label}</th>
                 ))}
@@ -215,7 +215,12 @@ const MemberDirectory = ({
                     />
                   </td>
                   <td className={styles.table__cell}>
-                    <button onClick={() => {}} className={styles.button}>
+                    <button
+                      onClick={() => {
+                        handleShowFamilyDetail(rowIndex);
+                      }}
+                      className={styles.button}
+                    >
                       Click on
                     </button>
                   </td>
