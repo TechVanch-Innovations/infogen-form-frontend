@@ -1,42 +1,17 @@
 import InputField from "../GenricComponents/Form/Input";
 import SelectField from "../GenricComponents/Form/Select";
 import styles from "./style.module.scss";
-import { useState } from "react";
 import { familyData } from "../../utils/familyData";
 
-const initialFormData = {
-  desigRelation: "",
-  title: "",
-  name: "",
-  qualification: "",
-  dob: "",
-  dom: "",
-  bloodGroup: "",
-  mobileNo: "",
-  emailId: "",
-  resAdd: "",
-  resPhone: "",
-  involmentInBusiness: "",
-  since: "",
-  status: "",
-};
-
-const FamilyDetail = ({ rowIndex }) => {
+const FamilyDetail = ({
+  rowIndex,
+  formData,
+  handleAddRow,
+  handleDeleteRow,
+  handleChange,
+}) => {
   console.log(rowIndex);
-  const [formData, setFormData] = useState([initialFormData]);
-  const handleChange = (name, value, index) => {
-    const newData = [...formData];
-    newData[index] = { ...newData[index], [name]: value };
-    setFormData(newData);
-  };
-  const handleAddRow = () => {
-    setFormData([...formData, { ...initialFormData }]);
-  };
 
-  const handleDeleteRow = (index) => {
-    const newData = formData.filter((_, rowIndex) => rowIndex !== index);
-    setFormData(newData);
-  };
   return (
     <div className={styles["family__detail"]}>
       <h3>Family Details</h3>

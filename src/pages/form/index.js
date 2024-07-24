@@ -9,6 +9,37 @@ import MemberDirectory from "../../components/MemberDirectory";
 import Loader from "../../components/GenricComponents/Loader";
 import FamilyDetail from "../../components/FamilyDetail";
 
+const directoryInitialFormData = {
+  constitution: "",
+  desigRelation: "",
+  title: "",
+  name: "",
+  qualification: "",
+  dob: "",
+  dom: "",
+  bloodGroup: "",
+  mobileNo: "",
+  emailId: "",
+  resAdd: "",
+  resPhone: "",
+  memberStatus: "",
+};
+const familyInitialFormData = {
+  desigRelation: "",
+  title: "",
+  name: "",
+  qualification: "",
+  dob: "",
+  dom: "",
+  bloodGroup: "",
+  mobileNo: "",
+  emailId: "",
+  resAdd: "",
+  resPhone: "",
+  involmentInBusiness: "",
+  since: "",
+  status: "",
+};
 const FormPage = () => {
   const [dealerCodeData, setDealerCodeData] = useState([]);
   const [constitutions, setConstitutions] = useState([]);
@@ -41,47 +72,61 @@ const FormPage = () => {
   });
   const [selectedDealerCode, setSelectedDealerCode] = useState("");
 
-  const directoryInitialFormData = {
-    constitution: "",
-    desigRelation: "",
-    title: "",
-    name: "",
-    qualification: "",
-    dob: "",
-    dom: "",
-    bloodGroup: "",
-    mobileNo: "",
-    emailId: "",
-    resAdd: "",
-    resPhone: "",
-    memberStatus: "",
-  };
+  const [familyFormData, setFamilyFormData] = useState([familyInitialFormData]);
   const [showFamilyDetailForRow, setShowFamilyDetailForRow] = useState(null);
   const [memberDirectoryData, setMemberDirectoryData] = useState([
     directoryInitialFormData,
   ]);
-  const handleShowFamilyDetail = (index) => {
+  const handleShowFamilyDetail = useCallback((index) => {
     setShowFamilyDetailForRow(index);
-  };
-  const handleDirectoryChanges = (name, value, index) => {
-    const newData = [...memberDirectoryData];
-    newData[index] = { ...newData[index], [name]: value };
-    setMemberDirectoryData(newData);
-  };
+  }, []);
+  const handleDirectoryChanges = useCallback((name, value, index) => {
+    setMemberDirectoryData((prevData) => {
+      const newData = [...prevData];
+      newData[index] = { ...newData[index], [name]: value };
+      return newData;
+    });
+  }, []);
+  const handleFamilyDataChanges = useCallback((name, value, index) => {
+    setFamilyFormData((prevData) => {
+      const newData = [...prevData];
+      newData[index] = { ...newData[index], [name]: value };
+      return newData;
+    });
+  }, []);
 
-  const handleAddRow = () => {
-    setMemberDirectoryData([
-      ...memberDirectoryData,
-      { ...directoryInitialFormData },
-    ]);
-  };
+  const handleAddRow = useCallback(
+    (type) => {
+      if (type === "directory") {
+        setMemberDirectoryData((prevData) => [
+          ...prevData,
+          { ...directoryInitialFormData },
+        ]);
+      } else if (type === "family") {
+        setFamilyFormData((prevData) => [
+          ...prevData,
+          { ...familyInitialFormData },
+        ]);
+      }
+    },
+    [directoryInitialFormData, familyInitialFormData]
+  );
 
-  const handleDeleteRow = (index) => {
-    const newData = memberDirectoryData.filter(
-      (_, rowIndex) => rowIndex !== index
-    );
-    setMemberDirectoryData(newData);
-  };
+  const handleDeleteRow = useCallback(
+    (type, index) => {
+      if (type === "directory") {
+        setMemberDirectoryData((prevData) =>
+          prevData.filter((_, rowIndex) => rowIndex !== index)
+        );
+      } else if (type === "family") {
+        setFamilyFormData((prevData) =>
+          prevData.filter((_, rowIndex) => rowIndex !== index)
+        );
+      }
+    },
+    [directoryInitialFormData, familyInitialFormData]
+  );
+
   useEffect(() => {
     const fetchDealerData = async () => {
       try {
@@ -191,15 +236,21 @@ const FormPage = () => {
           <MemberDirectory
             formData={memberDirectoryData}
             handleChange={handleDirectoryChanges}
-            handleAddRow={handleAddRow}
-            handleDeleteRow={handleDeleteRow}
+            handleAddRow={() => handleAddRow("directory")}
+            handleDeleteRow={(index) => handleDeleteRow("directory", index)}
             constitutions={constitutions}
             qualifications={qualifications}
             designations={designations}
             handleShowFamilyDetail={handleShowFamilyDetail}
           />
           {showFamilyDetailForRow !== null && (
-            <FamilyDetail rowIndex={showFamilyDetailForRow} />
+            <FamilyDetail
+              rowIndex={showFamilyDetailForRow}
+              formData={familyFormData}
+              handleChange={handleFamilyDataChanges}
+              handleAddRow={() => handleAddRow("family")}
+              handleDeleteRow={(index) => handleDeleteRow("family", index)}
+            />
           )}
         </>
       )}
