@@ -248,6 +248,8 @@ const FormPage = () => {
               rowIndex={showFamilyDetailForRow}
               formData={familyFormData}
               handleChange={handleFamilyDataChanges}
+              qualifications={qualifications}
+              designations={designations}
               handleAddRow={() => handleAddRow("family")}
               handleDeleteRow={(index) => handleDeleteRow("family", index)}
             />
