@@ -63,9 +63,13 @@ const FormPage = () => {
   // const [formData, setFormData] = useState(dealerData);
   const [selectedDealerCode, setSelectedDealerCode] = useState("");
 
-  const [familyFormData, setFamilyFormData] = useState([familyInitialFormDataTemplate]);
+  const [familyFormData, setFamilyFormData] = useState([
+    familyInitialFormDataTemplate,
+  ]);
   const [showFamilyDetail, setShowFamilyDetail] = useState(-1);
-  const [memberDirectoryData, setMemberDirectoryData] = useState([directoryInitialFormDataTemplate]);
+  const [memberDirectoryData, setMemberDirectoryData] = useState([
+    directoryInitialFormDataTemplate,
+  ]);
   // const [memberDirectoryData, setMemberDirectoryData] = useState(directoryData);
 
   useEffect(() => {
@@ -101,11 +105,17 @@ const FormPage = () => {
           setQualifications(formatOptions(data.qualitifcations || []));
           setDesignations(formatOptions(data.designations || []));
         }
-      } catch (err) { }
+      } catch (err) {}
     };
 
     fetchConstantList();
   }, []);
+
+  // close family detail box
+  const handleHideFamilyDetails = () => {
+    setShowFamilyDetail(-1);
+    setFamilyFormData([]);
+  };
 
   useEffect(() => {
     if (selectedDealerCode) {
@@ -129,7 +139,9 @@ const FormPage = () => {
         }));
       }
       const fetchMemberData = async () => {
-        const response = await fetch(`${GET_MEMBER_DATA_BY_DEALER_CODE}?dealer_code=${selectedDealerCode}`);
+        const response = await fetch(
+          `${GET_MEMBER_DATA_BY_DEALER_CODE}?dealer_code=${selectedDealerCode}`
+        );
         const result = await response.json();
         if (result.type === "found") {
           const hasDirectory = result?.directory?.length > 0;
@@ -137,18 +149,25 @@ const FormPage = () => {
             ...prev,
             membershipNo: result.memberData.member_no || "",
             membershipStatus: result.memberData?.member_status || "P",
-            membershipFee: (result.memberData.membership_fee == "Y") || false,
+            membershipFee: result.memberData.membership_fee == "Y" || false,
             ddNo: result.memberData.pay_instr_no || "",
-            membershipForm: (result.memberData.member_form == "Y") || "",
+            membershipForm: result.memberData.member_form == "Y" || "",
             membershipDate: dateFormatter(result.memberData.member_date) || "",
-            boardMeetingCeasationDate: dateFormatter(result.memberData.member_board_cease_date) || "",
+            boardMeetingCeasationDate:
+              dateFormatter(result.memberData.member_board_cease_date) || "",
             ddDate: dateFormatter(result.memberData.pay_instr_date) || "",
-            ceasationDate: dateFormatter(result.memberData.member_board_appnt_date) || "",
-            boardMeetingReinstateDate: dateFormatter(result.memberData.member_board_reinstate) || "",
-            other: (result.memberData.other == "Y") || false
+            ceasationDate:
+              dateFormatter(result.memberData.member_board_appnt_date) || "",
+            boardMeetingReinstateDate:
+              dateFormatter(result.memberData.member_board_reinstate) || "",
+            other: result.memberData.other == "Y" || false,
           }));
 
-          setMemberDirectoryData(hasDirectory ? transformDirectoryData(result?.directory) : [directoryInitialFormDataTemplate]);
+          setMemberDirectoryData(
+            hasDirectory
+              ? transformDirectoryData(result?.directory)
+              : [directoryInitialFormDataTemplate]
+          );
         } else if (result.type === "created") {
           setFormData((prev) => ({
             ...prev,
@@ -159,6 +178,7 @@ const FormPage = () => {
       };
       fetchMemberData();
     }
+    handleHideFamilyDetails();
   }, [selectedDealerCode, dealerCodeData]);
 
   // show family detail box for directory
@@ -166,15 +186,11 @@ const FormPage = () => {
     if (data) {
       setShowFamilyDetail(data.id);
       setFamilyFormData(data?.familyDetails || [familyInitialFormDataTemplate]);
-      document.getElementById("familyDetails").scrollIntoView({ behavior: "smooth" });
+      document
+        .getElementById("familyDetails")
+        .scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  // close family detail box
-  const handleHideFamilyDetails = () => {
-    setShowFamilyDetail(-1);
-    setFamilyFormData([]);
-  }
 
   // handle updates for directory data
   const handleDirectoryChanges = useCallback((name, value, index) => {
@@ -213,20 +229,17 @@ const FormPage = () => {
   );
 
   // delete directory or family row
-  const handleDeleteRow = useCallback(
-    (type, index) => {
-      if (type === TYPES.DIRECTORY) {
-        setMemberDirectoryData((prevData) =>
-          prevData.filter((_, rowIndex) => rowIndex !== index)
-        );
-      } else if (type === TYPES.FAMILY) {
-        setFamilyFormData((prevData) =>
-          prevData.filter((_, rowIndex) => rowIndex !== index)
-        );
-      }
-    },
-    []
-  );
+  const handleDeleteRow = useCallback((type, index) => {
+    if (type === TYPES.DIRECTORY) {
+      setMemberDirectoryData((prevData) =>
+        prevData.filter((_, rowIndex) => rowIndex !== index)
+      );
+    } else if (type === TYPES.FAMILY) {
+      setFamilyFormData((prevData) =>
+        prevData.filter((_, rowIndex) => rowIndex !== index)
+      );
+    }
+  }, []);
 
   // update value of membership form
   const handleMemebershipDetail = useCallback((name, value) => {
@@ -257,27 +270,38 @@ const FormPage = () => {
       if (!membershipFormValidity) {
         if (membershipForm.reportValidity) {
           membershipForm.reportValidity();
+        } else {
+          throw new Error(
+            "Please fill all the required details in membership directory"
+          );
         }
-        else {
-          throw new Error("Please fill all the required details in membership directory");
-        };
         return;
-      };
+      }
 
       // form validations
       if (formData.dealerAppointmentDate && formData.membershipDate) {
-        const dt1 = DateTime.fromISO(formData.membershipDate, { zone: "Asia/Kolkata" });
-        const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, { zone: "Asia/Kolkata" });
+        const dt1 = DateTime.fromISO(formData.membershipDate, {
+          zone: "Asia/Kolkata",
+        });
+        const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, {
+          zone: "Asia/Kolkata",
+        });
         if (!(dt1 > dt2)) {
-          throw new Error("Membership date should be greater than Dealer Appointment Date");
+          throw new Error(
+            "Membership date should be greater than Dealer Appointment Date"
+          );
         }
       }
 
       if (formData.dealerAppointmentDate && formData.ddDate) {
         const dt1 = DateTime.fromISO(formData.ddDate, { zone: "Asia/Kolkata" });
-        const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, { zone: "Asia/Kolkata" });
+        const dt2 = DateTime.fromISO(formData.dealerAppointmentDate, {
+          zone: "Asia/Kolkata",
+        });
         if (!(dt1 > dt2)) {
-          throw new Error("DD date should be greater than Dealer Appointment Date");
+          throw new Error(
+            "DD date should be greater than Dealer Appointment Date"
+          );
         }
       }
       // end of form validations
@@ -287,9 +311,10 @@ const FormPage = () => {
       if (!memberDetailFormValidity) {
         if (memberDetailForm.reportValidity) {
           memberDetailForm.reportValidity();
-        }
-        else {
-          throw new Error("Please fill all the required details in membership directory");
+        } else {
+          throw new Error(
+            "Please fill all the required details in membership directory"
+          );
         }
         return;
       }
@@ -297,21 +322,24 @@ const FormPage = () => {
       // execute submit logic and hit the API
       const formPayload = {
         membership: formData,
-        directory: memberDirectoryData
+        directory: memberDirectoryData,
       };
       const response = await fetch(`${POST_MEMBERSHIP_DATA}`, {
         method: "POST",
         body: JSON.stringify(formPayload),
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
-      toast.success(`Data ${formData?.membershipNo ? "saved" : "updated"} successfully!`);
-    }
-    catch (error) {
-      toast.error(error?.message || "Please check all the form fields or contact administrator");
-    }
-    finally {
+      toast.success(
+        `Data ${formData?.membershipNo ? "saved" : "updated"} successfully!`
+      );
+    } catch (error) {
+      toast.error(
+        error?.message ||
+          "Please check all the form fields or contact administrator"
+      );
+    } finally {
       setFormLoading(false);
     }
   };
@@ -361,14 +389,13 @@ const FormPage = () => {
           Save & Submit
         </Button>
       </div>
-      {
-        formLoading &&
+      {formLoading && (
         <div className={"default__loader"}>
           <div className={"default__loader__container"}>
             <Loader />
           </div>
         </div>
-      }
+      )}
     </div>
   );
 };
