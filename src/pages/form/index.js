@@ -116,7 +116,6 @@ const FormPage = () => {
         setFormData((prev) => ({
           dealerInoperative: dealerDetails.dlr_inoperative,
           dealerCode: selectedDealerCode,
-          membershipStatus: dealerDetails.dlr_status,
           division: dealerDetails.division,
           dealershipName: dealerDetails.dealership_name,
           location: dealerDetails.location,
@@ -137,6 +136,7 @@ const FormPage = () => {
           setFormData((prev) => ({
             ...prev,
             membershipNo: result.memberData.member_no || "",
+            membershipStatus: result.memberData?.member_status || "P",
             membershipFee: (result.memberData.membership_fee == "Y") || false,
             ddNo: result.memberData.pay_instr_no || "",
             membershipForm: (result.memberData.member_form == "Y") || "",

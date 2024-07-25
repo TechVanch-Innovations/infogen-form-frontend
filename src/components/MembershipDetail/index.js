@@ -53,7 +53,7 @@ const MembershipDetail = ({ formData, handleChange, dealerCodeData }) => {
                 required={false}
                 placeholder={"Pending"}
                 name="membershipStatus"
-                value={formData["membershipStatus"] || "N"}
+                value={formData["membershipStatus"] || "P"}
                 options={[
                   { value: "P", label: "Pending" },
                   { value: "C", label: "Active" },
